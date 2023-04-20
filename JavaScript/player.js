@@ -21,7 +21,7 @@ export class Player {
         //Vertical movement values
         this.verticalVelocity = 0;
         this.gravity = 1;
-        //Sound Effect
+        //Sound Effects
         this.sound = new Audio();
         this.sound.src = '../assets/jump.flac';
     }
