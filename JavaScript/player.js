@@ -20,22 +20,37 @@ export class Player {
         this.lowerMovementSpeed = -2;
         //Vertical movement values
         this.verticalVelocity = 0;
+        this.gravity = 1;
+        //Sound Effect
+        this.sound = new Audio();
+        this.sound.src = '../assets/jump.flac';
     }
 
     update(input){
-        //input handling
+        //Horizontal input handling
         if (input.includes('d')) this.movementSpeed = this.maxMovementSpeed;
         else if (input.includes('a')) this.movementSpeed = this.lowerMovementSpeed;
         else this.movementSpeed = 0;
 
         //Horizontal Movement
         this.x += this.movementSpeed;
+
         //Set L and R boundries
-        if (this.x < 0) {
-            this.x = 0;
-        } else if (this.x > this.game.width - this.width){
+        if (this.x < 0) this.x = 0;
+        else if (this.x > this.game.width - this.width){
             this.x = this.game.width - this.width;
         }
+
+        //Vertical input handling
+        if (input.includes(' ') && this.onGround()) this.verticalVelocity = -22,  this.sound.play();
+
+        //Vertical Movement
+        this.y += this.verticalVelocity;
+        if (!this.onGround()){
+            this.verticalVelocity += this.gravity;
+        } else if (this.y > this.game.height - this.height){
+            this.y = this.game.height - this.height;
+        } else this.verticalVelocity = 0;
 
         //Sprite Animation             
         if (this.gameFrame % this.staggerFrame == 0) {
@@ -49,5 +64,10 @@ export class Player {
         context.drawImage(this.image, this.frameX * this.width, this.frameY * this.height,
             this.width, this.height, this.x, this.y, this.width, this.height);
         
+    }
+
+    //This function check if the player is on ground
+    onGround(){
+        return this.y >= this.game.height - this.height;
     }
 }
