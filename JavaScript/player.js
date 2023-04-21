@@ -8,7 +8,7 @@ export class Player {
         //This put the sprite in the middle of the canvas at the bottom
         this.x = this.game.width /2 - this.width /2;
         this.y = this.game.height - this.height;
-        this.image = document.getElementById('player');
+        this.image = document.getElementById('player2');
         //Sprite animation values
         this.frameX = 0;
         this.frameY = 0;
