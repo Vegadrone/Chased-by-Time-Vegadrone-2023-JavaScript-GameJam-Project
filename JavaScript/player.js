@@ -24,6 +24,8 @@ export class Player {
         //Sound Effects
         this.sound = new Audio();
         this.sound.src = '../assets/jump.flac';
+        this.runSound = new Audio();
+        this.runSound.src = '../assets/fastrunning-6306.mp3';
     }
 
     update(input){
@@ -33,7 +35,8 @@ export class Player {
         else this.movementSpeed = 0;
 
         //Horizontal Movement
-        this.x += this.movementSpeed;
+        this.x += this.movementSpeed //this.runSound.play();
+       
 
         //Set L and R boundries
         if (this.x < 0) this.x = 0;

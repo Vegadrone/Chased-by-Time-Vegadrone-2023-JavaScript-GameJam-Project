@@ -2,18 +2,17 @@ export class Monster {
     constructor(game) {
         //Point to the whole game object
         this.game = game;
-        //Player Dimensions
-        this.width = 200;
+        //MonsterDimension Dimensions
+        this.width = 250;
         this.height = 400;
-        //This put the sprite in the middle of the canvas at the bottom
         this.x = 0;
         this.y = this.game.height - this.height;
-        this.image = document.getElementById('player');
+        this.image = document.getElementById('monster');
         //Sprite animation values
         this.frameX = 0;
         this.frameY = 0;
         this.gameFrame = 0;
-        this.staggerFrame = 5;
+        this.staggerFrame = 8;
         //Sound Effects
     }
 
