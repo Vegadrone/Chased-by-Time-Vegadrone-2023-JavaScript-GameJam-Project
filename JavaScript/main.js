@@ -9,8 +9,8 @@ window.addEventListener('load', function(){
     const ctx = canvas.getContext('2d');
 
     //Canvas dimensions
-    canvas.width = 2400;
-    canvas.height = 720;
+    canvas.width = 1800;
+    canvas.height = 540;
 
     class Game {
         constructor(width, height){

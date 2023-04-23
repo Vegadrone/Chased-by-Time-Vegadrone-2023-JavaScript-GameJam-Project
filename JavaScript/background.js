@@ -26,7 +26,7 @@ export class Background {
         //Background Dimension
         this.width = 2400;
         this.height = 720;
-        this.layer5image = document.getElementById('layer6');
+        this.layer5image = document.getElementById('layer5');
         this.layer1 = new Layer(this.game, this.width, this.height, 1, this.layer5image);
         this.backgroundLayers = [this.layer1];
     }
