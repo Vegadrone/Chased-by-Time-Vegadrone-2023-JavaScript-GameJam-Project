@@ -12,8 +12,10 @@ export class Player {
         //Sprite animation values
         this.frameX = 0;
         this.frameY = 0;
-        this.gameFrame = 0;
-        this.staggerFrame = 5;
+        this.maxFrame = 7;
+        this.fps = 60;
+        this.frameInterval = 1000/this.fps;
+        this.frameTimer = 0;
         //Horizontal movement values
         this.movementSpeed = 0;
         this.maxMovementSpeed = 4;
@@ -28,7 +30,7 @@ export class Player {
         this.runSound.src = '../assets/fastrunning-6306.mp3';
     }
 
-    update(input){
+    update(input, deltaTime){
         //Horizontal input handling
         if (input.includes('d')) this.movementSpeed = this.maxMovementSpeed;
         else if (input.includes('a')) this.movementSpeed = this.lowerMovementSpeed;
@@ -56,11 +58,19 @@ export class Player {
         } else this.verticalVelocity = 0;
 
         //Sprite Animation             
-        if (this.gameFrame % this.staggerFrame == 0) {
-            if (this.frameX < 7) this.frameX++;
+        // if (this.gameFrame % this.maxFrame == 0) {
+        //     if (this.frameX < 7) this.frameX++;
+        //     else this.frameX = 0;
+        // };
+        // this.gameFrame++;
+
+        if (this.frameTimer > this.frameInterval) {
+            this.frameTimer = 0;
+            if (this.frameX < this.maxFrame) this.frameX++;
             else this.frameX = 0;
-        };
-        this.gameFrame++;
+        } else {
+            this.frameTimer += deltaTime;
+        }
     }
 
     draw(context){

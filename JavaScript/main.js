@@ -21,10 +21,10 @@ window.addEventListener('load', function(){
 
         }
 
-        update(){
+        update(deltaTime){
         //Game calculations e framecount
-            this.player.update(this.input.keys);
-            this.monster.update();
+            this.player.update(this.input.keys, deltaTime);
+            this.monster.update(deltaTime);
         }
 
         draw(context){
@@ -35,12 +35,16 @@ window.addEventListener('load', function(){
     }
 
     const game = new Game(canvas.width, canvas.height);
+    let lastTime = 0;
 
-    function animate(){
+    function animate(timeStamp){
+        const deltaTime = timeStamp - lastTime;
+        lastTime = timeStamp;
+        
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         game.draw(ctx);
-        game.update();
+        game.update(deltaTime);
         requestAnimationFrame(animate);
     }
-    animate();
+    animate(0);
 });

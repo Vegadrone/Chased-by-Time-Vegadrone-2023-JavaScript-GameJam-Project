@@ -11,18 +11,28 @@ export class Monster {
         //Sprite animation values
         this.frameX = 0;
         this.frameY = 0;
-        this.gameFrame = 0;
-        this.staggerFrame = 6;
+        this.maxFrame = 7;
+        this.fps = 60;
+        this.frameInterval = 1000 / this.fps;
+        this.frameTimer = 0;
         //Sound Effects
     }
 
-    update() {
+    update(deltaTime) {
         //Sprite Animation             
-        if (this.gameFrame % this.staggerFrame == 0) {
-            if (this.frameX < 7) this.frameX++;
-            else this.frameX = 0;
-        };
-        this.gameFrame++;
+        // if (this.gameFrame % this.staggerFrame == 0) {
+        //     if (this.frameX < 7) this.frameX++;
+        //     else this.frameX = 0;
+        // };
+        // this.gameFrame++;
+
+          if (this.frameTimer > this.frameInterval) {
+              this.frameTimer = 0;
+              if (this.frameX < this.maxFrame) this.frameX++;
+              else this.frameX = 0;
+          } else {
+              this.frameTimer += deltaTime;
+          }
     }
 
     draw(context) {
