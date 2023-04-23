@@ -5,15 +5,15 @@ export class Player {
         //Player Dimensions
         this.width = 200;
         this.height = 200;
-        //This put the sprite in the middle of the canvas at the bottom
+        //Player Position
         this.x = this.game.width /2 - this.width /2;
-        this.y = this.game.height - this.height;
+        this.y = this.game.height - this.height - this.game.groundMargin;
         this.image = document.getElementById('player2');
         //Sprite animation values
         this.frameX = 0;
         this.frameY = 0;
         this.maxFrame = 7;
-        this.fps = 60;
+        this.fps = 20;
         this.frameInterval = 1000/this.fps;
         this.frameTimer = 0;
         //Horizontal movement values
@@ -58,12 +58,6 @@ export class Player {
         } else this.verticalVelocity = 0;
 
         //Sprite Animation             
-        // if (this.gameFrame % this.maxFrame == 0) {
-        //     if (this.frameX < 7) this.frameX++;
-        //     else this.frameX = 0;
-        // };
-        // this.gameFrame++;
-
         if (this.frameTimer > this.frameInterval) {
             this.frameTimer = 0;
             if (this.frameX < this.maxFrame) this.frameX++;
@@ -81,6 +75,6 @@ export class Player {
 
     //This function check if the player is on ground
     onGround(){
-        return this.y >= this.game.height - this.height;
+        return this.y >= this.game.height - this.height - this.game.groundMargin;
     }
 }

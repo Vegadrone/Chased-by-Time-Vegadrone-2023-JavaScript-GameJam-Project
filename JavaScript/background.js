@@ -1,12 +1,45 @@
-class Background {
-    constructor(game){
-          //Point to the whole game object
-          this.game = game;
-          //Background Dimension
-          this.width = 250;
-          this.height = 400;
-          this.x = 30;
-          this.y = this.game.height - this.height;
-          this.image = document.getElementById('layer-1');
+
+class Layer {
+    constructor(game, width, height, speedModifier, image) {
+        this.game = game;
+        this.width = width;
+        this.height = height;
+        this.speedModifier = speedModifier;
+        this.image = image;
+        this.x = 0;
+        this.y = 0;
+    }
+    
+    update(){
+        if (this.x < - this.width) this.x = 0;
+        else this.x -= this.game.speed * this.speedModifier;
+    }
+    
+    draw(context){
+        context.drawImage(this.image, this.x, this.y, this.width, this.height)
+    }
+}
+export class Background {
+    constructor(game) {
+        //Point to the whole game object
+        this.game = game;
+        //Background Dimension
+        this.width = 2400;
+        this.height = 720;
+        this.layer5image = document.getElementById('layer6');
+        this.layer1 = new Layer(this.game, this.width, this.height, 1, this.layer5image);
+        this.backgroundLayers = [this.layer1];
+    }
+
+    update(){
+        this.backgroundLayers.forEach(layer => {
+            layer.update();
+        })
+    }
+
+    draw(context){
+        this.backgroundLayers.forEach(layer =>{
+            layer.draw(context);
+        })
     }
 }
