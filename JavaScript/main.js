@@ -16,13 +16,12 @@ window.addEventListener('load', function(){
         constructor(width, height){
             this.width = width;
             this.height = height;
-            this.groundMargin = 50;
+            this.groundMargin = 70;
             this.gameSpeed = 3;
             this.background = new Background(this);
             this.player = new Player(this);
             this.monster = new Monster(this);
             this.input = new InputHandler();
-
         }
 
         update(deltaTime){
@@ -36,7 +35,8 @@ window.addEventListener('load', function(){
         //draw of score, character and more
             this.background.draw(context);
             this.player.draw(context);  
-            this.monster.draw(context);  
+            this.monster.draw(context);
+            
         }
     }
 
