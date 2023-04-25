@@ -27,18 +27,21 @@ export class Player {
         this.sound = new Audio();
         this.sound.src = '../assets/jump.flac';
         this.runSound = new Audio();
-        this.runSound.src = '../assets/fastrunning-6306.mp3';
+        this.runSound.src = '../assets/running-player.flac';
+        this.clockKillSound = new Audio();
+        this.clockKillSound.src = '../assets/enemykill.wav';
     }
 
     update(input, deltaTime){
         this.checkCollision();
+        
         //Horizontal input handling
         if (input.includes('d')) this.movementSpeed = this.maxMovementSpeed;
         else if (input.includes('a')) this.movementSpeed = this.lowerMovementSpeed;
         else this.movementSpeed = 0;
 
         //Horizontal Movement
-        this.x += this.movementSpeed //this.runSound.play();
+        this.x += this.movementSpeed, this.runSound.play();
        
 
         //Set L and R boundries
@@ -93,6 +96,7 @@ export class Player {
                 clock.y + clock.height > this.y) {
                 //collision is detected
                 clock.markedForDeletion = true;
+                this.clockKillSound.play();
                 this.game.score++; 
             } else {
                 //no collision

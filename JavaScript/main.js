@@ -28,14 +28,20 @@ window.addEventListener('load', function(){
             this.input = new InputHandler(this);
             //UI
             this.UI = new UI(this);
-            this.fontColor = 'black';
-            this.score = 0;
+            this.fontColor = 'orange';
+            this.ageClock = 0;
+            this.age = 0;
             //Clocks timer values
             this.clockTimer = 0;
             this.clockInterval = 1500;
             this.clocks = [];
             //debug mode
             this.debug = true;
+            //sound
+            this.music = new Audio();
+            this.music.src = '../assets/general music.wav';
+            this.gameOverSound = new Audio();
+            this.gameOverSound.src = '../assets/lose-sound.wav';
         }
         
         update(deltaTime){
@@ -76,10 +82,9 @@ window.addEventListener('load', function(){
                 this.clocks.push(new GroundClock(this)); 
             }
           this.clocks.push(new FlyingClock(this))          
-          console.log(this.clocks);
         }
     }
-    
+   
     const game = new Game(canvas.width, canvas.height);
     let lastTime = 0;
 
@@ -88,11 +93,18 @@ window.addEventListener('load', function(){
             game.monster.x + game.monster.width > game.player.x &&
             game.monster.y < game.player.y + game.player.height &&
             game.monster.y + game.monster.height > game.player.y) {
-            game.monster.x++;
+            game.gameOverSound.play();
+            game.music.pause();
+            
         }
     }
+
+    //Age Count
+    function ageCount(){ game.age++;}
+    setInterval(ageCount, 5000);
     
     function animate(timeStamp){
+        game.music.play();
         const deltaTime = timeStamp - lastTime;
         lastTime = timeStamp;
         
