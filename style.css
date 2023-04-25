@@ -5,7 +5,7 @@
 }
 
 #gameScreen {
-    border: 2px solid black;
+    /* display: none; */
 	position: absolute;
     transform: translate(-50%, -50%);
     top: 50%;
@@ -15,4 +15,8 @@
 
 .load-images{
     display: none;
+}
+
+#start-screen{
+    display: block;
 }

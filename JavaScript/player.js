@@ -3,8 +3,8 @@ export class Player {
         //Point to the whole game object
         this.game = game;
         //Player Dimensions
-        this.width = 200;
-        this.height = 200;
+        this.width = 100;
+        this.height = 150;
         //Player Position
         this.x = this.game.width /2 - this.width /2;
         this.y = this.game.height - this.height - this.game.groundMargin;
@@ -31,6 +31,7 @@ export class Player {
     }
 
     update(input, deltaTime){
+        this.checkCollision();
         //Horizontal input handling
         if (input.includes('d')) this.movementSpeed = this.maxMovementSpeed;
         else if (input.includes('a')) this.movementSpeed = this.lowerMovementSpeed;
@@ -68,6 +69,11 @@ export class Player {
     }
 
     draw(context){
+        //debug mode, see collision hitbox
+        if (this.game.debug) {
+            //this draw a rectangle with only the border visible
+            context.strokeRect(this.x, this.y, this.width, this.height);
+        }
         context.drawImage(this.image, this.frameX * this.width, this.frameY * this.height,
             this.width, this.height, this.x, this.y, this.width, this.height);
         
@@ -76,5 +82,21 @@ export class Player {
     //This function check if the player is on ground
     onGround(){
         return this.y >= this.game.height - this.height - this.game.groundMargin;
+    }
+
+    //Cheking player clock collision
+    checkCollision(){
+        this.game.clocks.forEach(clock => {
+            if (clock.x < this.x + this.width &&
+                clock.x + clock.width > this.x &&
+                clock.y < this.y + this.height &&
+                clock.y + clock.height > this.y) {
+                //collision is detected
+                clock.markedForDeletion = true;
+                this.game.score++; 
+            } else {
+                //no collision
+            }
+        });
     }
 }

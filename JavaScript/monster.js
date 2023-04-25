@@ -12,7 +12,7 @@ export class Monster {
         //Sprite animation values
         this.frameX = 0;
         this.frameY = 0;
-        this.maxFrame = 7;
+        this.maxFrame = 9;
         this.fps = 20;
         this.frameInterval = 1000 / this.fps;
         this.frameTimer = 0;
@@ -30,6 +30,10 @@ export class Monster {
     }
 
     draw(context) {
+         if (this.game.debug) {
+             //this draw a rectangle with only the border visible
+             context.strokeRect(this.x, this.y, this.width, this.height);
+         }
         context.drawImage(this.image, this.frameX * this.width, this.frameY * this.height,
             this.width, this.height, this.x, this.y, this.width, this.height);
 
