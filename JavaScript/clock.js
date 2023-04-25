@@ -29,7 +29,7 @@ class Clock {
     }
 
     draw(context){
-        if (this.game.debug) {
+        if (!this.game.debug) {
             //this draw a rectangle with only the border visible
             context.strokeRect(this.x, this.y, this.width, this.height);
         }

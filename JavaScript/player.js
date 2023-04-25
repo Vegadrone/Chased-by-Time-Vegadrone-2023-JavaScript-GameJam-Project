@@ -73,7 +73,7 @@ export class Player {
 
     draw(context){
         //debug mode, see collision hitbox
-        if (this.game.debug) {
+        if (!this.game.debug) {
             //this draw a rectangle with only the border visible
             context.strokeRect(this.x, this.y, this.width, this.height);
         }
@@ -97,9 +97,6 @@ export class Player {
                 //collision is detected
                 clock.markedForDeletion = true;
                 this.clockKillSound.play();
-                this.game.score++; 
-            } else {
-                //no collision
             }
         });
     }
