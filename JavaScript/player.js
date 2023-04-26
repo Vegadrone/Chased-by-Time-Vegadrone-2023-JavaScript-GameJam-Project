@@ -41,7 +41,9 @@ export class Player {
         else this.movementSpeed = 0;
 
         //Horizontal Movement
-        this.x += this.movementSpeed, this.runSound.play();
+        if (!this.game.gameOver) {
+            this.x += this.movementSpeed, this.runSound.play();
+        } else this.runSound.pause();
        
 
         //Set L and R boundries

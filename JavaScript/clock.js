@@ -65,6 +65,14 @@ export class FlyingClock extends Clock {
     }
 }
 
+export class GoldenFlyingClock extends FlyingClock {
+    constructor(game){
+        super();
+        this.game = game;
+        this.image = document.getElementById('clock-gold');
+    }
+}
+
 export class GroundClock extends Clock {
     constructor(game){
         super();

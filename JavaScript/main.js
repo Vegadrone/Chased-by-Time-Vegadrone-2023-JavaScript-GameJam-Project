@@ -26,10 +26,10 @@ window.addEventListener('load', function(){
             this.player = new Player(this);
             this.monster = new Monster(this);
             this.input = new InputHandler(this);
+            this.gameOver = false;
             //UI
             this.UI = new UI(this);
             this.fontColor = 'orange';
-            this.ageClock = 0;
             this.age = 0;
             //Clocks timer values
             this.clockTimer = 0;
@@ -42,6 +42,7 @@ window.addEventListener('load', function(){
             this.music.src = '../assets/general music.wav';
             this.gameOverSound = new Audio();
             this.gameOverSound.src = '../assets/lose-sound.wav';
+
         }
         
         update(deltaTime){
@@ -63,6 +64,15 @@ window.addEventListener('load', function(){
                     this.clocks.splice(this.clocks.indexOf(clock), 1);
                 }
             })
+
+            if (this.age > 20 ) {
+                this.player.x--;
+                this.monster.x--; 
+            } else if (!this.player.checkCollision()){
+                this.monster.x++;
+            } else {
+                this.monster.x = 0;
+            }
         }
         
         draw(context){
@@ -95,39 +105,49 @@ window.addEventListener('load', function(){
             game.monster.y + game.monster.height > game.player.y) {
             game.gameOverSound.play();
             game.music.pause();
-            
+            game.gameOver = true;
         }
     }
 
     //Age Count
     function ageCount(){ game.age++;}
-    setInterval(ageCount, 5000);
     
+    //GameLoop
     function animate(timeStamp){
-        game.music.play();
-        const deltaTime = timeStamp - lastTime;
-        lastTime = timeStamp;
-        
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        game.draw(ctx);
-        game.update(deltaTime);
-        requestAnimationFrame(animate);
+            game.music.play();
+            const deltaTime = timeStamp - lastTime;
+            lastTime = timeStamp;
+            setInterval(ageCount, 5000 - deltaTime);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            game.draw(ctx);
+            game.update(deltaTime);     
+            if(!game.gameOver){
+                requestAnimationFrame(animate);
+            } else {
+                toggleScreen('start-screen', false);
+                toggleScreen('gameScreen', false);
+                toggleScreen('gameOver-screen', true);
+                game.gameOver = false;
+            }
+            
+    }
+    //Visibility Screen Toggle
+    function toggleScreen(id, toggle){
+        let element = document.getElementById(id);
+        let display = ( toggle ) ? 'block' : 'none';
+        element.style.display = display;
+    }
+    
+    function startGame() {
+        //Starts GameLoop
+        animate(0);
+        toggleScreen('start-screen', false);
+        toggleScreen('gameOver-screen', false);
+        toggleScreen('gameScreen', true); 
     }
 
-    // //Start game Screen Toggle
-    // function toggleScreen(id, toggle){
-    //     let element = document.getElementById(id);
-    //     let display = ( toggle ) ? 'block' : 'none';
-    //     element.style.display = display;
-    // }
+    document.getElementById("start-button").onclick = startGame;
+    document.getElementById("retry-button").onclick = startGame;
     
-    // function startGame() {
-    //    toggleScreen('start-screen', false);
-    //    toggleScreen('gameScreen', true); 
-    //    //Game Loop Start
-    // }
-    
-    // document.getElementById("start-button").onclick = startGame;
-    
-    animate(0); 
-});
+})
+
