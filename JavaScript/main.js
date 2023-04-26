@@ -67,17 +67,10 @@ window.addEventListener('load', function(){
                     this.clocks.splice(this.clocks.indexOf(clock), 1);
                 }
             })
-            //Age Count
-            function ageCount(){ game.age++;}
-            setInterval(ageCount, 5000 -deltaTime);
-
-            if (this.age > 20 ) {
+        
+            if (this.age > 2) {
                 this.player.x--;
-                this.monster.x--; 
-            } else if (!this.player.checkCollision()){
-                this.monster.x++;
-            } else {
-                this.monster.x = 0;
+                this.monster.x++; 
             }
         }
         
@@ -97,12 +90,20 @@ window.addEventListener('load', function(){
             if (Math.random() < 0.5) {
                 this.clocks.push(new GroundClock(this)); 
             }
-          this.clocks.push(new FlyingClock(this))          
+            if (Math.random() < 0.5) {
+                this.clocks.push(new FlyingClock(this));
+            }        
         }
     }
    
     const game = new Game(canvas.width, canvas.height);
     let lastTime = 0;
+
+     //Age Count
+     function ageCount() {
+         game.age++;
+     }
+     setInterval(ageCount, 2000);
 
     function monsterCollisionCheck(){
         if (game.monster.x < game.player.x + game.player.width -50 &&

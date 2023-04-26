@@ -99,6 +99,7 @@ export class Player {
                 //collision is detected
                 clock.markedForDeletion = true;
                 this.clockKillSound.play();
+                this.game.monster.x = -1; 
             }
         });
     }
