@@ -27,6 +27,12 @@ export class Monster {
           } else {
               this.frameTimer += deltaTime;
           }
+
+          //Set L and R boundries
+        if (this.x < 0) this.x = 0;
+        else if (this.x > this.game.width - this.width){
+            this.x = this.game.width - this.width;
+        }
     }
 
     draw(context) {

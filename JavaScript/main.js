@@ -10,7 +10,10 @@ window.addEventListener('load', function(){
     //Canvas Set Up
     const canvas = document.getElementById("gameScreen");
     const ctx = canvas.getContext('2d');
-
+    //prvent the right click on canvas
+    // document.addEventListener("contextmenu", (event) => {
+    //     event.preventDefault();
+    //  });
     //Canvas dimensions
     canvas.width = 1800;
     canvas.height = 540;
@@ -21,7 +24,7 @@ window.addEventListener('load', function(){
             this.width = width;
             this.height = height;
             this.groundMargin = 70;
-            this.gameSpeed = 3;
+            this.gameSpeed = 5;
             this.background = new Background(this);
             this.player = new Player(this);
             this.monster = new Monster(this);
@@ -64,6 +67,9 @@ window.addEventListener('load', function(){
                     this.clocks.splice(this.clocks.indexOf(clock), 1);
                 }
             })
+            //Age Count
+            function ageCount(){ game.age++;}
+            setInterval(ageCount, 5000 -deltaTime);
 
             if (this.age > 20 ) {
                 this.player.x--;
@@ -99,8 +105,8 @@ window.addEventListener('load', function(){
     let lastTime = 0;
 
     function monsterCollisionCheck(){
-        if (game.monster.x < game.player.x + game.player.width &&
-            game.monster.x + game.monster.width > game.player.x &&
+        if (game.monster.x < game.player.x + game.player.width -50 &&
+            game.monster.x + game.monster.width > game.player.x + 60 &&
             game.monster.y < game.player.y + game.player.height &&
             game.monster.y + game.monster.height > game.player.y) {
             game.gameOverSound.play();
@@ -109,45 +115,20 @@ window.addEventListener('load', function(){
         }
     }
 
-    //Age Count
-    function ageCount(){ game.age++;}
-    
     //GameLoop
     function animate(timeStamp){
             game.music.play();
             const deltaTime = timeStamp - lastTime;
             lastTime = timeStamp;
-            setInterval(ageCount, 5000 - deltaTime);
+            
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             game.draw(ctx);
             game.update(deltaTime);     
             if(!game.gameOver){
                 requestAnimationFrame(animate);
-            } else {
-                toggleScreen('start-screen', false);
-                toggleScreen('gameScreen', false);
-                toggleScreen('gameOver-screen', true);
-                game.gameOver = false;
-            }
-            
+            } 
     }
-    //Visibility Screen Toggle
-    function toggleScreen(id, toggle){
-        let element = document.getElementById(id);
-        let display = ( toggle ) ? 'block' : 'none';
-        element.style.display = display;
-    }
-    
-    function startGame() {
-        //Starts GameLoop
-        animate(0);
-        toggleScreen('start-screen', false);
-        toggleScreen('gameOver-screen', false);
-        toggleScreen('gameScreen', true); 
-    }
-
-    document.getElementById("start-button").onclick = startGame;
-    document.getElementById("retry-button").onclick = startGame;
-    
+    //Start GameLoop
+    animate(0);
 })
 

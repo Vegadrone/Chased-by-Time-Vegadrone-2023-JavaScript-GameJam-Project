@@ -13,12 +13,12 @@ export class Player {
         this.frameX = 0;
         this.frameY = 0;
         this.maxFrame = 7;
-        this.fps = 20;
+        this.fps = 60;
         this.frameInterval = 1000/this.fps;
         this.frameTimer = 0;
         //Horizontal movement values
         this.movementSpeed = 0;
-        this.maxMovementSpeed = 4;
+        this.maxMovementSpeed = 1;
         this.lowerMovementSpeed = -2;
         //Vertical movement values
         this.verticalVelocity = 0;
@@ -92,10 +92,10 @@ export class Player {
     //Cheking player clock collision
     checkCollision(){
         this.game.clocks.forEach(clock => {
-            if (clock.x < this.x + this.width &&
-                clock.x + clock.width > this.x &&
-                clock.y < this.y + this.height &&
-                clock.y + clock.height > this.y) {
+            if (clock.x < this.x + this.width -50 &&
+                clock.x + clock.width > this.x +80 &&
+                clock.y < this.y + this.height -5 &&
+                clock.y + clock.height > this.y +10) {
                 //collision is detected
                 clock.markedForDeletion = true;
                 this.clockKillSound.play();
